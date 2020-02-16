@@ -1,0 +1,56 @@
+server:
+  port: 8480
+logging:
+ level:
+        com:
+            OAuth:
+                SpringOAuthExample: DEBUG                
+ file:
+  path: D:/Job_Adder/SpringOAuthExample/src/main/resources/log
+  name: D:/Job_Adder/SpringOAuthExample/src/main/resources/log/JobAdder.log
+# pattern:
+#  file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%"
+    
+api:
+    base-uri: https://api.jobadder.com/v2
+
+spring:
+  datasource:
+      url: jdbc:sqlserver://13.211.99.108:1433;databaseName=jobadder
+      username: sa
+      password: Cliquote@rootuser123
+      autoReconnect: true
+      driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver  
+  jpa:
+      hibernate:
+        # To be updated in real production usage!
+        dialect: org.hibernate.dialect.SQLServer2012Dialect
+        #dialect: org.hibernate.dialect.H2Dialect
+        ddl-auto: none
+      format_sql: true
+      show-sql: true
+  security:
+        oauth2:
+            client:
+                registration:
+                        jobadder:
+                            client-id: bkupcxagquourffj46gthviqxm
+                            client-secret: n2czca4adu3ebjupeckdc6xmbedd4g74ida3nutli3vpneljgapi
+                            authorization-grant-type: authorization_code
+                            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
+                            scope: read
+                provider:
+                        jobadder:
+                          authorization-uri: https://id.jobadder.com/connect/authorize
+                          token-uri: https://id.jobadder.com/connect/token
+                          user-info-uri: "{api.base-uri}/users/current"
+
+  http:
+    log-request-details: true
+  batch:
+    job:
+      enabled: false
+      
+
+
+  
